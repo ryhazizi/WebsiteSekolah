@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Mukta+Mahee');
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,600');
+
+a {
+	text-decoration: none !important;
+}
+
+.title {
+	font-family: 'Mukta Mahee', sans-serif;
+}
+
+.trucktor {
+	margin: 250px 35% 0px 35%;
+	font-family: 'Raleway', sans-serif;
+	color: #000000;
+	font-weight: 100;
+	font-size: 50px;
+}
+
+.form_container {
+	margin: 100px 0px 0px 40px;
+	width: 100%;
+}
+
+.data_container {
+	margin: 100px 0px 0px 100px;
+	width: 100%;
+}
+
+.pagination_container {
+	margin-top: 30px;
+}
+
+.nodata_text {
+	margin-top:100px;
+}
+
+
+.editdata_container {
+	margin: 100px auto 0px auto;
+	width: 80%;
+}
