@@ -10,9 +10,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-    	$siswa      = HomeModel::paginate(5)->setPath('datasiswa');
-    	$collection = HomeModel::all();
-    	return view('home', ['siswa' => $siswa,'collection' => $collection]);
+
+      $HomeModel  = new HomeModel;
+
+    	$siswa      = $HomeModel->orderBy('id', 'desc')->paginate(5)->setPath('datasiswa');
+    	return view('home', ['siswa' => $siswa]);
     }
 
     public function PreventDirectAccess()
@@ -59,6 +61,12 @@ class HomeController extends Controller
     						return TRUE;
     					}
     				break;
+            case 'ceksemua':
+              if ($siswa->nama == $Datanya[0] && $siswa->noabsen == $Datanya[1] && $siswa->kelas == $Datanya[2]) 
+              {
+                return TRUE;
+              }
+            break;
     				default:
     					return response()->json(['Status' => 'Data tidak tersedia!', 'Message' => 'Data yang mau dicek tidak tersedia']);
     				break;
@@ -100,7 +108,7 @@ class HomeController extends Controller
     	  {
     	  	 return response()->json(['Type' => 'PoLuNHsZcT' , 'Title' => 'Kesalahan', 'Message' => 'No absen harus terdiri dari 2 digit !', 'PopupType' => 'error']);	
     	  }
-    	  else if (!preg_match("/^[a-zA-Z ]*$/", $request->namasiswa))
+    	  else if (!preg_match("/^[a-zA-Z ]*$/", $request->namasiswas))
     	  {
     	  	 return response()->json(['Type' => 'zunwHknqqp' , 'Title' => 'Kesalahan', 'Message' => 'Nama siswa hanya boleh berisi huruf dan spasi !', 'PopupType' => 'error']);	 
     	  }
@@ -112,29 +120,29 @@ class HomeController extends Controller
     	  {
     	  	 return response()->json(['Type' => 'diLpAKp0s9' , 'Title' => 'Kesalahan', 'Message' => 'Kelas hanya boleh berisi huruf, angka dan spasi !', 'PopupType' => 'error']);	 
     	  }
-    	  else if ($this->cekdata('nama', $request->namasiswa) && $this->cekdata('noabsen', $request->noabsen) && $this->cekdata('kelas', $request->kelas))
+    	  else if ($this->cekdata('ceksemua', array(0 => $request->namasiswa, 1 => $request->noabsen, 2 => $request->kelas)))
     	  {
     	  	 return response()->json(['Type' => 'agqroJNDRE' , 'Title' => 'Info', 'Message' => 'Data siswa yang anda masukkan sudah ada di dalam database', 'PopupType' => 'info']);
     	  }
     	  else
     	  {
 
-    		$HomeModel             = new HomeModel;
+    		  $HomeModel             = new HomeModel;
 
-	    	$HomeModel->nama       = $request->namasiswa;
+	    	  $HomeModel->nama       = $request->namasiswa;
 
-    		$HomeModel->noabsen    = $request->noabsen;
+      		$HomeModel->noabsen    = $request->noabsen;
 
-	    	$HomeModel->kelas      = $request->kelas;
+	       	$HomeModel->kelas      = $request->kelas;
     
-    		if ($HomeModel->save())
-    		{
-    			return response()->json(['Type' => '0vwaxl8NI4' , 'Title' => 'Sukses', 'Message' => 'Data anda berhasil ditambahkan !', 'PopupType' => 'success']);	 
-    		}
-    		else
-    		{
-    			return response()->json(['Type' => '1GUp5Mz1ok' , 'Title' => 'Kesalahan', 'Message' => 'Data anda tidak berhasil ditambahkan !', 'PopupType' => 'error']);	 
-    		}
+      		if ($HomeModel->save())
+    	   	{
+    		  	return response()->json(['Type' => '0vwaxl8NI4' , 'Title' => 'Sukses', 'Message' => 'Data anda berhasil ditambahkan !', 'PopupType' => 'success']);	 
+    		  }
+    		  else
+    		  {
+    			 return response()->json(['Type' => '1GUp5Mz1ok' , 'Title' => 'Kesalahan', 'Message' => 'Data anda tidak berhasil ditambahkan !', 'PopupType' => 'error']);	 
+    		  }
     	  }
     	}
     	else
@@ -204,13 +212,12 @@ class HomeController extends Controller
           {
              return response()->json(['Type' => 'diLpAKp0s9' , 'Title' => 'Kesalahan', 'Message' => 'Kelas hanya boleh berisi huruf, angka dan spasi !', 'PopupType' => 'error']);   
           }
-          else if ($this->cekdata('nama', $request->namasiswa) && $this->cekdata('noabsen', $request->noabsen) && $this->cekdata('kelas', $request->kelas))
+          else if ($this->cekdata('ceksemua', array(0 => $request->namasiswa, 1 => $request->noabsen, 2 => $request->kelas)))
           {
              return response()->json(['Type' => 'agqroJNDRE' , 'Title' => 'Info', 'Message' => 'Data siswa yang anda ingin perbaharui sudah ada di dalam database', 'PopupType' => 'info']);
           }
           else
           {
-
             $siswa->nama       = $request->namasiswa;
 
             $siswa->noabsen    = $request->noabsen;

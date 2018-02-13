@@ -78,7 +78,7 @@ if (@$_GET['page'] > $e = ceil($siswa->total()/5)) {
 	</form>
  </div>
 </div>
-<div class="w3-col s5">
+<div class="w3-col s6">
  <div class="data_container">
   <div class="w3-container w3-green">
     <h2 class="title">Data Siswa</h2>
