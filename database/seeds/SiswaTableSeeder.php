@@ -14,7 +14,7 @@ class SiswaTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::Create();
-
+         //ganti nilai 30 sesuai jumlah yg diinginkan
         for ($i=0; $i <= 30; $i++) { 
         	
         	DB::table('siswa')->insert([
